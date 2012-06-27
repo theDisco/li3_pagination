@@ -66,6 +66,8 @@ public function index() {
 ?>
 ```
 
+In your view you just need to add following code:
+
 ``` php
 <?php
 echo $this->pagination->create($binding, $options);
@@ -87,6 +89,21 @@ echo $this->pagination->pre();
 echo $this->pagination->pages();
 echo $this->pagination->post();
 echo $this->pagination->end();
+?>
+```
+
+By default li3_pagination renders the pages even if only one page is present in pagination. If you want to hide the pagination
+you can use following syntax:
+
+``` php
+<?php
+if ($this->pagination->create($binding, $options + array('start' => false))->count() > 1) {
+    echo $this->pagination->start();
+    echo $this->pagination->pre();
+    echo $this->pagination->pages();
+    echo $this->pagination->post();
+    echo $this->pagination->end();
+}
 ?>
 ```
 
