@@ -1,0 +1,19 @@
+{
+    "name": "theDisco/li3_pagination",
+    "type": "extension",
+    "description": "Pagination helper for the Lithium PHP framework",
+    "keywords": ["lithium", "pagination"],
+    "homepage": "https://github.com/theDisco/li3_pagination",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Wojtek Gancarczyk",
+            "email": "wojtek@aferalabs.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.6",
+        "UnionOfRAD/lithium": ">=0.10"
+    }
+}
+
