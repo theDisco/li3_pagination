@@ -2,20 +2,25 @@ li3_paginate
 ============
 
 li3_pagination was designed to facilitate generating of pagination for Lithium Framework projects. So far helper can
-generate a pagination from a record set for the current context. You cannot provide custom arguments for the route
-generation. Helper cannot extract the query from the provided record set either. It is planed to extend the behavior
-of the helper to support custom route parameters as well as arbitrary record counts.
+generate a pagination from a record set for the current context or from an arbitrary record count. You cannot provide
+custom arguments for the route generation. Helper cannot extract the query from the provided record set either. It is
+planed to extend the behavior of the helper to support custom route parameters.
 
 Installation
 ------------
 
-Clone this repo into the `libraries` folder of your project. Before you can use this helper, you need to tell lithium
+Clone this repo into the `libraries` folder of your project.
+
+	cd /path/to/app/libraries
+	git clone https://github.com/theDisco/li3_pagination.git
+
+Before you can use this helper, you need to tell lithium
 to load this extension. The best way to do it is to add it as a library in the bootstrap process:
 
 ``` php
 <?php
 
-// /app/config/bootstrap/libraries.php
+// /path/to/app/config/bootstrap/libraries.php
 
 // ...
 Libraries::add('li3_pagination', array('bootstrap' => false));
@@ -28,7 +33,7 @@ it according to your needs:
 ``` php
 <?php
 
-// /app/config/routes.php
+// /path/to/app/config/routes.php
 
 // ...
 Router::connect('/{:controller}/{:action}/page/{:page:[0-9]+}');
@@ -63,14 +68,25 @@ public function index() {
 
 ``` php
 <?php
-$this->pagination->create($binding, $options);
-$this->pagination->start();
-$this->pagination->first();
-$this->pagination->previous();
-$this->pagination->pages();
-$this->pagination->next();
-$this->pagination->last();
-$this->pagination->end();
+echo $this->pagination->create($binding, $options);
+echo $this->pagination->first();
+echo $this->pagination->previous();
+echo $this->pagination->pages();
+echo $this->pagination->next();
+echo $this->pagination->last();
+echo $this->pagination->end();
+?>
+```
+
+You can also use the compound methods for creating the first, previous, next and last page.
+
+``` php
+<?php
+echo $this->pagination->create($binding, $options);
+echo $this->pagination->pre();
+echo $this->pagination->pages();
+echo $this->pagination->post();
+echo $this->pagination->end();
 ?>
 ```
 
@@ -78,8 +94,19 @@ li3_pagination does not have a constructor and is really similar in the usage to
 Framework. Create method takes a binding as the first argument and an array of options as the second argument. You can define
 any class as the binding as long as it implements the method `model()`. The value returned by `model()` method has to be
 a string or an object you can use to invoke the method `count()`. Basically the `\lithium\data\collection\RecordSet` is
-the perfect candidate as the first argument. Second argument is an array of options. So far li3_paginate supports following
-options
+the perfect candidate as the first argument. Second argument is an array of options.
+
+If you have defined any conditions for your model, li3_pagination won't be able to retrieve the correct count. In this case
+you can provide the records count as the first argument of `create()` method.
+
+``` php
+<?php
+echo $this->pagination->create('150', $options);
+?>
+```
+
+Configuration and Options
+-------------------------
 
 ``` php
 $options = array(
@@ -89,14 +116,13 @@ $options = array(
 );
 ```
 
-TODO Document the options for proxies
+TODO Document the options
 
 TODO
 ----
-* Complete this documentation and expose all the options and filters supported by this helper.
-* Add support for arbitrary result counts and make the binding optional.
+* Document the options and filters supported by this helper.
 * Add support for arbitrary route parameters.
 * Introduce filters for all relevant methods.
 * Complete the code documentation.
-* Refactor the code to meet the lithium coding standards.
 * Refactor the default settings and configuration.
+* Finish tests
